@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import './App.css';
-import Todo from './components/Todos/Todo';
+import StatusTodos from './components/Todos/StatosTodos';
 import TodoForm from './components/Todos/TodoForm';
 import TodoList from './components/Todos/TodoList';
+import TodoActions from './components/Todos/TodosActions';
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -24,18 +25,43 @@ function App() {
 
   const toggleTodoHandler = (id) => {
     setTodos(
-      todos.map((todo) => 
-       todo.id === id
+      todos.map((todo) =>
+        todo.id === id
           ? { ...todo, isCompleted: !todo.isCompleted }
           : { ...todo }
       )
     );
   };
 
+  const completedTodoHandler = () =>
+    todos.filter((todo) => todo.isCompleted === true).length;
+  const activeTodoHandler = () =>
+    todos.filter((todo) => todo.isCompleted === false).length;
+
+  const resetTodosHandler = () => {
+    setTodos([]);
+  };
+
+  const clearComplitedHandler = () => {
+    return setTodos(todos.filter((todo) => todo.isCompleted === false));
+  };
+
   return (
     <div className="App">
       <h1>Todo App</h1>
       <TodoForm addTodo={addTodoHandler} />
+      <StatusTodos
+        activeTodo={activeTodoHandler()}
+        completedTodo={completedTodoHandler()}
+      />
+      {todos.length > 0 && (
+        <TodoActions
+          resetTodos={resetTodosHandler}
+          clearComplited={clearComplitedHandler}
+          completedTodosExist={!!completedTodoHandler}
+        />
+      )}
+
       {todos.length === 0 ? (
         <h2>Todo list is empty</h2>
       ) : (
