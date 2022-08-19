@@ -46,7 +46,13 @@ function App() {
     return setTodos(todos.filter((todo) => todo.isCompleted === false));
   };
 
-  return (
+  const delteLastTodoHandler = () => {
+    const lastTodo=todos.pop()
+    setTodos(todos.filter((todo)=>todo !==lastTodo));
+    
+  }
+
+ return (
     <div className="App">
       <h1>Todo App</h1>
       <TodoForm addTodo={addTodoHandler} />
@@ -59,6 +65,7 @@ function App() {
           resetTodos={resetTodosHandler}
           clearComplited={clearComplitedHandler}
           completedTodosExist={!!completedTodoHandler}
+          deleteLastTodo={delteLastTodoHandler}
         />
       )}
 
