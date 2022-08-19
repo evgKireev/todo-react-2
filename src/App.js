@@ -34,7 +34,7 @@ function App() {
   };
 
   const completedTodoHandler = () =>
-    todos.filter((todo) => todo.isCompleted === true).length;
+    todos.filter((todo) => todo.isCompleted).length;
   const activeTodoHandler = () =>
     todos.filter((todo) => todo.isCompleted === false).length;
 
